@@ -23,7 +23,7 @@ async function run() {
       core.info(`setting owner to ${owner}`);
       core.info(`setting repo to ${repo}`);
       
-      const myToken = core.getInput('token');
+      const token = core.getInput('token');
       const octokit = github.getOctokit(token);
 
       // await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
