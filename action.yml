@@ -1,13 +1,26 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'get-PR-latest-commit'
+description: 'Get the latest commit on a PR'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  repository:
+    description: 'Repo of code in question'
     required: true
-    default: '1000'
+    default: '${{ github.repository }}'
+  pull_number:
+    description: 'PR number'
+    required: true
+    default: '${{ github.event.pull_request.number }} '
+  token:
+    description: 'Personal Access Token'
+    required: false
+    default: '${{ github.token }}'
 outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  latest_commit_sha:
+    description: 'SHA1 of the latest commit'
+  latest_commit_message:
+    description: 'The commit message of the last commit'
+  latest_commit_context:
+    description: 'The path of a JSON file generated to store the context of the latest commit'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
