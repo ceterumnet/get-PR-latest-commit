@@ -1,19 +1,9 @@
 const core = require('@actions/core');
-// const wait = require('./wait');
 const github = require('@actions/github');
 
 
-// most @actions toolkit packages have async methods
 async function run() {
   try {
-    // const ms = core.getInput('milliseconds');
-    // core.info(`Waiting ${ms} milliseconds ...`);
-
-    // core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    // await wait(parseInt(ms));
-    // core.info((new Date()).toTimeString());
-
-      // core.setOutput('time', new Date().toTimeString());
       const repository = core.getInput('repository');
       const owner = repository.split('/')[0];
       const repo = repository.split('/')[1];
@@ -26,12 +16,6 @@ async function run() {
       const token = core.getInput('token');
       const octokit = github.getOctokit(token);
 
-      // await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
-      //     owner: 'octocat',
-      //     repo: 'hello-world',
-      //     pull_number: 42
-      // })
-
       const { data: pullRequestCommits } = await octokit.pulls.listCommits({
           owner: owner,
           repo: repo,
@@ -39,10 +23,12 @@ async function run() {
       });
 
       core.info(`pullRequestCommits ${pullRequestCommits}`);
-      
+      const last_commit = pullRequestCommits[-1, pullRequestCommits.length - 1];
+      core.info(`last_commit.sha: ${last_commit.sha}`);
+      core.info(`last_commit.message: ${last_commit.commit.message}`);
 
   } catch (error) {
-    core.setFailed(error.message);
+      core.setFailed(error.message);
   }
 }
 
