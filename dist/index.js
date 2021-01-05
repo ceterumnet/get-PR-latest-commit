@@ -45,7 +45,7 @@ async function run() {
           pull_number: pull_number,
       });
 
-      core.info(`pullRequestcommits ${pullRequestcommits}`);
+      core.info(`pullRequestCommits ${pullRequestCommits}`);
       
 
   } catch (error) {
