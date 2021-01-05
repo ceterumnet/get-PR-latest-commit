@@ -27,6 +27,9 @@ async function run() {
       core.info(`last_commit.sha: ${last_commit.sha}`);
       core.info(`last_commit.message: ${last_commit.commit.message}`);
 
+      core.setOutput('LAST_COMMIT_SHA', last_commit.sha);
+      core.setOutput('LAST_COMMIT_MESSAGE', last_commit.commit.message);
+      
   } catch (error) {
       core.setFailed(error.message);
   }
