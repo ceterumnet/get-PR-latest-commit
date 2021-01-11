@@ -15,11 +15,11 @@ async function run() {
       const owner = repository.split('/')[0];
       const repo = repository.split('/')[1];
       const pull_number = core.getInput('pull_number');
-      
+
       core.info(`setting repository to ${repository}`);
       core.info(`setting owner to ${owner}`);
       core.info(`setting repo to ${repo}`);
-      
+
       const token = core.getInput('token');
       const octokit = github.getOctokit(token);
 
@@ -30,13 +30,13 @@ async function run() {
       });
 
       core.info(`pullRequestCommits ${pullRequestCommits}`);
-      const last_commit = pullRequestCommits[-1, pullRequestCommits.length - 1];
-      core.info(`last_commit.sha: ${last_commit.sha}`);
-      core.info(`last_commit.message: ${last_commit.commit.message}`);
+      const latest_commit = pullRequestCommits[-1, pullRequestCommits.length - 1];
+      core.info(`latest_commit.sha: ${latest_commit.sha}`);
+      core.info(`latest_commit.message: ${latest_commit.commit.message}`);
 
-      core.setOutput('LAST_COMMIT_SHA', last_commit.sha);
-      core.setOutput('LAST_COMMIT_MESSAGE', last_commit.commit.message);
-      
+      core.setOutput('LATEST_COMMIT_SHA', latest_commit.sha);
+      core.setOutput('LATEST_COMMIT_MESSAGE', latest_commit.commit.message);
+
   } catch (error) {
       core.setFailed(error.message);
   }
